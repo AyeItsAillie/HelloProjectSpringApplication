@@ -1,16 +1,28 @@
 package com.example.helloprojectspring;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import jakarta.persistence.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
 
+@Entity
+@Table(name = "books")
 public class Book {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
+    @Column(nullable = false, length = 200)
     private String title;
+
+    @Column(nullable = false, length = 150)
     private String author;
-    private double price;
+
+    @Column(nullable = false, precision = 10, scale = 2)
+    private BigDecimal price;
+
+    @Column(name = "image_url", length = 1000)
+    private String imageUrl;
 
 
 
@@ -22,7 +34,7 @@ public class Book {
     }
 
 
-    public Book(int id, String title, String author, double price) {
+    public Book(int id, String title, String author, BigDecimal price) {
         this.id = id;
         this.title = title;
         this.author = author;
@@ -33,7 +45,7 @@ public class Book {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -53,12 +65,20 @@ public class Book {
         this.author = author;
     }
 
-    public double getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }
 
