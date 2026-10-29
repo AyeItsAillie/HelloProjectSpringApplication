@@ -4,9 +4,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RestController
 @RequestMapping("/books")
+@CrossOrigin(origins = "http://localhost:5173")
 public class BookController {
 
     private final BookRepository bookRepository;
@@ -15,7 +18,13 @@ public class BookController {
         this.bookRepository = bookRepository;
     }
 
+    //getallbooks
     @GetMapping
+    public ResponseEntity<List<Book>> getAllBooks() {
+        return ResponseEntity.ok(bookRepository.findAll());
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id) {
         return bookRepository.findById(id)
                 .map(ResponseEntity::ok)
@@ -24,7 +33,7 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
-
+// Let MySQL generate a new ID
         book.setId(null);
         Book savedBook = bookRepository.save(book);
         return ResponseEntity
