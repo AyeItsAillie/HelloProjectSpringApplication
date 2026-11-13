@@ -33,7 +33,7 @@ public class BookController {
 
     @PostMapping
     public ResponseEntity<Book> addBook(@RequestBody Book book) {
-// Let MySQL generate a new ID
+    // Let MySQL generate a new ID
         book.setId(null);
         Book savedBook = bookRepository.save(book);
         return ResponseEntity
